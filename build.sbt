@@ -1,16 +1,16 @@
 name := "AkkaProjectCuriosity"
-
 version := "0.1"
-
 scalaVersion := "2.13.2"
 
 lazy val akkaHttpVersion = "10.2.0-M1"
 lazy val akkaVersion = "2.6.4"
+lazy val redisVersion = "3.20"
 
 val akkaHttp = "com.typesafe.akka" %% "akka-http" % akkaHttpVersion
 val akkaActorTyped = "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion
 val akkaStream = "com.typesafe.akka" %% "akka-stream" % akkaVersion
 
+lazy val redisDependencies = Seq("net.debasishg" %% "redisclient" % redisVersion)
 
 lazy val akkaDependencies = Seq(
   akkaHttp,
@@ -26,14 +26,14 @@ lazy val akkaDependencies = Seq(
 //  )
 
 lazy val datasource =
-  project in file("datasource")
+  (project in file("datasource")).settings(libraryDependencies ++= redisDependencies)
 
 lazy val services =
-  project in file("services")
+  (project in file("services")).dependsOn(datasource)
 
-lazy val controllers = (project in file("controllers")).settings(name := "Hello", libraryDependencies ++= akkaDependencies)
+lazy val controllers = (project in file("controllers")).settings(name := "controllers", libraryDependencies ++= akkaDependencies).dependsOn(services)
 
-lazy val server = (project in file("server")).settings(name := "Hello", libraryDependencies ++= akkaDependencies ).dependsOn(controllers)
+lazy val server = (project in file("server")).settings(name := "server", libraryDependencies ++= akkaDependencies ).dependsOn(controllers, datasource)
 
 
 
