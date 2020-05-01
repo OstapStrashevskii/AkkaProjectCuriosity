@@ -19,52 +19,62 @@ object ServerApp extends App {
   val redisDataStore: RedisDataSource = new RedisDataSource() with Utils
   val reqInfoEntry = new RequestInfoEntry(redisDataStore) with Utils
 
-  val imageControllerRoute = new ImageController().route
-  val requestInfoControllerRoute = new RequestInfoController().route
 
-  val route = imageControllerRoute ~ requestInfoControllerRoute
+
+
 
   def incrementRejection() = {
     reqInfoEntry.incrementRjectedNum
   }
 
-//  implicit def rejectionHandler =
-//    RejectionHandler.newBuilder()
-//      .handle {
-//        case MissingCookieRejection(cookieName) =>
-//          println("fff")
+  implicit def rejectionHandler =
+    RejectionHandler.newBuilder()
+      .handle {
+        case MissingCookieRejection(cookieName) =>
+          println("fff")
 //          incrementRejection()
-//          complete(HttpResponse(BadRequest, entity = "No cookies, no service!!!"))
-//      }
-//      .handle {
-//        case AuthorizationFailedRejection =>
-//          println("fff2")
+          complete(HttpResponse(BadRequest, entity = "No cookies, no service!!!"))
+      }
+      .handle {
+        case AuthorizationFailedRejection =>
+          println("fff2")
 //          incrementRejection()
-//          complete((Forbidden, "You're out of your depth!"))
-//      }
-//      .handle {
-//        case ValidationRejection(msg, _) =>
-//          println("fff3")
+          complete((Forbidden, "You're out of your depth!"))
+      }
+      .handle {
+        case ValidationRejection(msg, _) =>
+          println("fff3")
 //          incrementRejection()
-//          complete((InternalServerError, "That wasn't valid! " + msg))
-//      }
-//      .handleAll[MethodRejection] { methodRejections =>
-//        println("fff4")
+          complete((InternalServerError, "That wasn't valid! " + msg))
+      }
+      .handleAll[MethodRejection] { methodRejections =>
+        println("fff4")
 //        incrementRejection()//todo sideeffect ??
-//        val names = methodRejections.map(_.supported.name)
-//        complete((MethodNotAllowed, s"Can't do that! Supported: ${names mkString " or "}!"))
-//      }
-//      .handleNotFound {
-//        println("fff4")
+        val names = methodRejections.map(_.supported.name)
+        complete((MethodNotAllowed, s"Can't do that! Supported: ${names mkString " or "}!"))
+      }
+      .handleNotFound {
+        println("fff4")
 //        incrementRejection()
-//        complete((NotFound, "Not here!"))
-//      }
-//      .result()
+        complete((NotFound, "Not herere!"))
+      }
+      .result()
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
 
-//  val route2 =
+  val imageControllerRoute = new ImageController().route
+  val requestInfoControllerRoute = new RequestInfoController().route
+
+
+
+//  val route = imageControllerRoute ~ requestInfoControllerRoute
+
+  val route = handleRejections(rejectionHandler){
+    imageControllerRoute ~ requestInfoControllerRoute
+  }
+
+    //  val route2 =
 //    handleRejections(rejectionHandler){
 //      path("hello") {
 //        get {
