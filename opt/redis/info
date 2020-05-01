@@ -1,0 +1,20 @@
+>>>INFO
+
+https://riptutorial.com/ru/redis
+
+https://netpoint-dc.com/blog/nastroika-redis-docker-dlya-produktovogo-ispolzovaniya/
+
+https://www.ionos.com/community/hosting/redis/using-redis-in-docker-containers/
+
+>>>TO RUN THIS
+    sudo docker run --restart=always -d --name redis_1 \
+       -v /opt/redis/etc/redis.conf:/usr/local/etc/redis/redis.conf \
+       -v /opt/redis/data:/data \
+       -p 127.0.0.1:6379:6379 redis redis-server \
+       /usr/local/etc/redis/redis.conf
+
+>>>TO CONNECT WITH COMMANDLINE INSTALL IT
+sudo apt install redis-tools
+
+>>>CONNECT WITH REDDIS
+sudo redis-cli
