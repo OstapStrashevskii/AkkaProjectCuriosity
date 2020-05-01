@@ -1,0 +1,12 @@
+# Project exclude paths
+/controllers/target/
+/controllers/target/scala-2.12/classes/
+/datasource/target/
+/datasource/target/scala-2.12/classes/
+/project/project/target/
+/project/target/
+/server/target/
+/server/target/scala-2.12/classes/
+/services/target/
+/services/target/scala-2.12/classes/
+/target/
