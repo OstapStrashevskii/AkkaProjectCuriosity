@@ -14,8 +14,7 @@ import akka.http.scaladsl.server.Directives._
 
 object ServerApp extends App {
 //  self: ImageControllerImpl =>
-  implicit val system = ActorSystem("my-system")
-  implicit val materializer = ActorMaterializer()
+
 
   val redisDataStore: RedisDataSource = new RedisDataSource() with Utils
   val reqInfoEntry = new RequestInfoEntry(redisDataStore) with Utils
@@ -29,38 +28,57 @@ object ServerApp extends App {
     reqInfoEntry.incrementRjectedNum
   }
 
-  implicit def rejectionHandler =
-    RejectionHandler.newBuilder()
-      .handle {
-        case MissingCookieRejection(cookieName) =>
-          println("fff")
-          incrementRejection()
-          complete(HttpResponse(BadRequest, entity = "No cookies, no service!!!"))
-      }
-      .handle {
-        case AuthorizationFailedRejection =>
-          println("fff2")
-          incrementRejection()
-          complete((Forbidden, "You're out of your depth!"))
-      }
-      .handle {
-        case ValidationRejection(msg, _) =>
-          println("fff3")
-          incrementRejection()
-          complete((InternalServerError, "That wasn't valid! " + msg))
-      }
-      .handleAll[MethodRejection] { methodRejections =>
-        println("fff4")
-        incrementRejection()//todo sideeffect ??
-        val names = methodRejections.map(_.supported.name)
-        complete((MethodNotAllowed, s"Can't do that! Supported: ${names mkString " or "}!"))
-      }
-      .handleNotFound { complete((NotFound, "Not here!")) }
-      .result()
+//  implicit def rejectionHandler =
+//    RejectionHandler.newBuilder()
+//      .handle {
+//        case MissingCookieRejection(cookieName) =>
+//          println("fff")
+//          incrementRejection()
+//          complete(HttpResponse(BadRequest, entity = "No cookies, no service!!!"))
+//      }
+//      .handle {
+//        case AuthorizationFailedRejection =>
+//          println("fff2")
+//          incrementRejection()
+//          complete((Forbidden, "You're out of your depth!"))
+//      }
+//      .handle {
+//        case ValidationRejection(msg, _) =>
+//          println("fff3")
+//          incrementRejection()
+//          complete((InternalServerError, "That wasn't valid! " + msg))
+//      }
+//      .handleAll[MethodRejection] { methodRejections =>
+//        println("fff4")
+//        incrementRejection()//todo sideeffect ??
+//        val names = methodRejections.map(_.supported.name)
+//        complete((MethodNotAllowed, s"Can't do that! Supported: ${names mkString " or "}!"))
+//      }
+//      .handleNotFound {
+//        println("fff4")
+//        incrementRejection()
+//        complete((NotFound, "Not here!"))
+//      }
+//      .result()
 
+  implicit val system = ActorSystem("my-system")
+  implicit val materializer = ActorMaterializer()
 
+//  val route2 =
+//    handleRejections(rejectionHandler){
+//      path("hello") {
+//        get {
+//          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
+//        }
+//      }
+//    }
 
   val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
+
+//  // Route that will be bound to the Http
+//  final Route wrapped = handleRejections(rejectionHandler,
+//    this::getRoute); // Some route structure for this Server
+
 
 
 //  val route = authController.route ~ securityDirective.authenticated {
