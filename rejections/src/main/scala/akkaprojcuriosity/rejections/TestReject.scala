@@ -18,12 +18,12 @@ object TestReject extends App {
 
   // rejection handler
   val badRequestHandler: RejectionHandler = { (rejections: Seq[Rejection]) =>
-    println(s"I have encountered rejections: $rejections")
+    println(s"bad I have encountered rejections: $rejections")
     Some(complete((StatusCodes.BadRequest)))
   }
 
   val forbiddenHandler: RejectionHandler = { (rejections: Seq[Rejection]) =>
-    println(s"I have encountered rejections: $rejections")
+    println(s"forbidden I have encountered rejections: $rejections")
     Some(complete((StatusCodes.Forbidden)))
   }
 

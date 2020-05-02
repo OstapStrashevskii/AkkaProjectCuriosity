@@ -26,16 +26,14 @@ object ServerApp extends App {
 
   val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(getRoute, "localhost", 8080)
 
-//  Route.seal(route = getRoute)
-
-//  bindingFuture.map(x => x.)
-
   private def getRoute: Route = {
-    val imageControllerRoute = new ImageController().route
-    val requestInfoControllerRoute = new RequestInfoController().route
-//    hand
-    handleRejections(appComponents.handlers.rejectionHandler) {
-      imageControllerRoute ~ requestInfoControllerRoute
+//    handleRejections(appComponents.handlers.forbiddenHandler){
+//      handleRejections(appComponents.handlers.badRequestHandler){
+//        new ImageController().route ~ new RequestInfoController().route
+//      }
+//    }
+    handleRejections(appComponents.handlers.rejectionHandlerWithCounter) {
+      new ImageController().route ~ new RequestInfoController().route
     }
   }
 
@@ -44,7 +42,4 @@ object ServerApp extends App {
     reqInfoEntry.setRejectedNum()
     reqInfoEntry.setSuccessfullNum()
   }
-
-//  log.info(s"Server online at http://${webServiceConfig.interface}:${webServiceConfig.port}/")
-//  Http().bindAndHandle(route, webServiceConfig.interface, webServiceConfig.port)
 }
