@@ -35,7 +35,7 @@ lazy val controllers = (project in file("controllers")).settings(name := "contro
 
 lazy val server = (project in file("server")).settings(name := "server", libraryDependencies ++= akkaDependencies ).dependsOn(controllers, datasource)
 
-
+lazy val rejections = (project in file("rejections")).settings(name := "rejections", libraryDependencies ++= akkaDependencies)
 
 //"com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
 //"ch.qos.logback" % "logback-classic" % "1.2.3",

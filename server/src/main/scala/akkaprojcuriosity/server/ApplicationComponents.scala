@@ -6,6 +6,6 @@ object ApplicationComponents {
 
   lazy val redisDataSource: RedisDataSource = new RedisDataSource() with Utils
   lazy val requestInfoEntry: RequestInfoEntry = new RequestInfoEntry(redisDataSource) with Utils
-  lazy val rejections: Rejections = new Rejections(requestInfoEntry)
+  lazy val handlers: Handlers = new Handlers(requestInfoEntry)
 
 }

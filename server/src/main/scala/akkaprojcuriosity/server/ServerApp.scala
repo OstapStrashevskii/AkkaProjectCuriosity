@@ -5,6 +5,8 @@ import akkaprojcuriosity.controllers.{ImageController, RequestInfoController}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.http.scaladsl.server.Route
+
+import scala.concurrent.Future
 //import akka.http.scaladsl.server.Directives.{complete, get, path}
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, MethodRejection, MissingCookieRejection, RejectionHandler, ValidationRejection}
 import akka.stream.ActorMaterializer
@@ -22,12 +24,17 @@ object ServerApp extends App {
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
 
-  val bindingFuture = Http().bindAndHandle(getRoute, "localhost", 8080)
+  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(getRoute, "localhost", 8080)
+
+//  Route.seal(route = getRoute)
+
+//  bindingFuture.map(x => x.)
 
   private def getRoute: Route = {
     val imageControllerRoute = new ImageController().route
     val requestInfoControllerRoute = new RequestInfoController().route
-    handleRejections(appComponents.rejections.rejectionHandler) {
+//    hand
+    handleRejections(appComponents.handlers.rejectionHandler) {
       imageControllerRoute ~ requestInfoControllerRoute
     }
   }
