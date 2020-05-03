@@ -30,7 +30,7 @@ object DataStorageModule extends App {
 
   val r = new RequestInfoEntry(new RedisDataSource() with Utils) with Utils
 
-  r.setRejectedNum()
+  r.setRejectedNum(0)
   println(r.getRjectedNum)
   r.incrementRjectedNum
   r.incrementRjectedNum

@@ -3,12 +3,12 @@ package akkaprojcuriosity.datasource
 class RequestInfoEntry(redisDataSource: RedisDataSource) {
   self: Utils =>
 
-  def setRejectedNum(): Boolean = {
-    redisDataSource.redisClient.set(RejectedRequestNum, "0")
+  def setRejectedNum(num: Int): Boolean = {
+    redisDataSource.redisClient.set(RejectedRequestNum, num)
   }
 
-  def setSuccessfullNum(): Boolean = {
-    redisDataSource.redisClient.set(SuccessfulRequestsNum, "0")
+  def setSuccessfullNum(num: Int): Boolean = {
+    redisDataSource.redisClient.set(SuccessfulRequestsNum, num)
   }
 
   def getRjectedNum: Option[String] = {

@@ -14,17 +14,20 @@ import akka.http.scaladsl.model.StatusCodes._
 import akkaprojcuriosity.controllers
 import akkaprojcuriosity.datasource.{RedisDataSource, RequestInfoEntry, Utils}
 import akka.http.scaladsl.server.Directives._
+import akkaprojcuriosity.server.ApplicationComponents
+import akkaprojcuriosity.server.ApplicationComponents._
 
 object ServerApp extends App {
 //  self: ApplicationComponents =>
 
-  val appComponents = ApplicationComponents
-  initDB(appComponents.redisDataSource)
+//  val appComponents = ApplicationComponents
+  initDB(redisDataSource)
 
-  implicit val system = ActorSystem("my-system")
-  implicit val materializer = ActorMaterializer()
+//  implicit val system = ActorSystem("my-system")
+//  implicit val materializer = ActorMaterializer()
 
-  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(getRoute, "localhost", 8080)
+
+  val bindingFuture: Future[Http.ServerBinding] = ApplicationComponents.http.bindAndHandle(getRoute, "localhost", 8080)
 
   private def getRoute: Route = {
 //    handleRejections(appComponents.handlers.forbiddenHandler){
@@ -32,14 +35,14 @@ object ServerApp extends App {
 //        new ImageController().route ~ new RequestInfoController().route
 //      }
 //    }
-    handleRejections(appComponents.handlers.rejectionHandlerWithCounter) {
-      new ImageController().route ~ new RequestInfoController().route
+    handleRejections(ApplicationComponents.handlers.rejectionHandlerWithCounter) {
+      new ImageController().route ~ new RequestInfoController(ApplicationComponents.requestInfoService).route
     }
   }
 
   private def initDB(dSource: RedisDataSource) = {
     val reqInfoEntry = new RequestInfoEntry(dSource) with Utils
-    reqInfoEntry.setRejectedNum()
-    reqInfoEntry.setSuccessfullNum()
+    reqInfoEntry.setRejectedNum(0)
+    reqInfoEntry.setSuccessfullNum(0)
   }
 }

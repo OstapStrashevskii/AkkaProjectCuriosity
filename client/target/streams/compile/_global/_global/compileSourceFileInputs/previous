@@ -1,0 +1,1 @@
+["sbt.Task[scala.collection.immutable.Map[java.lang.String, scala.collection.Seq[scala.Tuple2[java.nio.file.Path, sbt.nio.FileStamp]]]]",{"2.12.10":{"hashes":[["/home/benderbej/projects/HKRANK/AkkaProjectCuriosity/client/src/main/scala/akkaprojcuriosity/client/Client.scala","fe59e87c4b3fcff80e79c68478477e1979c84513"]],"lastModifiedTimes":[]}}]
