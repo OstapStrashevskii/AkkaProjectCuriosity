@@ -8,18 +8,20 @@ import akkaprojcuriosity.datasource.{ RequestInfoEntry }
 class Handlers(requestInfoEntry: RequestInfoEntry) {
 
   def rejectionHandlerWithCounter: RejectionHandler = { (rejections: Seq[Rejection]) => //todo while seq I get head only
-    if(rejections.size > 0) {
+    if(rejections.nonEmpty) {
       rejections.head match {
         case MissingCookieRejection(_) =>
           Some(complete(BadRequest, "bad"))
         case AuthenticationFailedRejection(_, _) =>
           Some(complete((Forbidden, "You're out of your depth!")))
         case _ =>
-          Some(complete((NotFound, "Not here bldghad!")))
+          Some(complete((NotFound, "Not here!")))
       }
     } else {
       requestInfoEntry.incrementRjectedNum
       Some(complete(BadRequest, "bad request"))
     }
   }
+
+//  RejectionHandler.default.withFallback()
 }

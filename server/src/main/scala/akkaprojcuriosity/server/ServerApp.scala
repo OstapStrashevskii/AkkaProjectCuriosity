@@ -23,6 +23,6 @@ object ServerApp extends App {
   private def initDB(dSource: RedisDataSource) = {
     val reqInfoEntry = new RequestInfoEntry(dSource) with Utils
     reqInfoEntry.setRejectedNum(0)
-    reqInfoEntry.setSuccessfullNum(0)
+    reqInfoEntry.setSuccessfulNum(0)
   }
 }

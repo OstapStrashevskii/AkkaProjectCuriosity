@@ -2,8 +2,15 @@ package akkaprojcuriosity.datasource
 
 import com.redis._
 import com.redis.RedisClient
+import com.typesafe.scalalogging.Logger
 
 object DataStorageModule extends App {
+
+  val logger = Logger("logger")//todo
+  logger.debug("ffffff")
+  logger.info("ffffff")
+  logger.error("ffffff")
+  logger.warn("ffffff")
 
 //  val redisClient = new RedisClient("localhost", 6379)
 //  redisClient.set("key", "some value")

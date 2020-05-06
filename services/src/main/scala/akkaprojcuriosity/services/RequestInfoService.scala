@@ -4,12 +4,12 @@ import akkaprojcuriosity.datasource.{ RequestInfoEntry }
 
 class RequestInfoService(requestInfoEntry: RequestInfoEntry) {
 
-  def getRjectedNum: Option[String] = {
-    requestInfoEntry.getRjectedNum
+  def getRejectedNum: Option[String] = {
+    requestInfoEntry.getRejectedNum
   }
 
   def getSuccessfullNum: Option[String] = {
-    requestInfoEntry.getSuccessfullNum
+    requestInfoEntry.getSuccessfulNum
   }
 
   def incrementRjectedNum: Boolean = {
@@ -17,6 +17,6 @@ class RequestInfoService(requestInfoEntry: RequestInfoEntry) {
   }
 
   def incrementSuccessfullNum: Boolean = {
-    requestInfoEntry.incrementSuccessfullNum
+    requestInfoEntry.incrementSuccessfulNum
   }
 }
