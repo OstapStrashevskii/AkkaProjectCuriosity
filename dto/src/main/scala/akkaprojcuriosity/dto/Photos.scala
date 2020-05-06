@@ -1,8 +1,6 @@
 package akkaprojcuriosity.dto
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.{ Format, Json, OFormat }
+import play.api.libs.json.{ Json, OFormat }
 
 //todo not typed yet
 
@@ -25,7 +23,7 @@ object Camera {
   implicit lazy val cameraFormat: OFormat[Camera] = Json.format[Camera]
 }
 
-//case class Rover(id: Int, name: String, loading_date: String, launch_date: String, status: String, max_sol: Int, max_date: String, total_photos: Int, cameras: Seq[Camera])
+//todo the same
 case class Rover(id: Int, name: String, launch_date: String, status: String, max_sol: Int, max_date: String, total_photos: Int)
 
 object Rover {

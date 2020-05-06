@@ -1,9 +1,8 @@
 package akkaprojcuriosity.services
 
-import akkaprojcuriosity.datasource.{RedisDataSource, RequestInfoEntry, Utils}
+import akkaprojcuriosity.datasource.{ RequestInfoEntry }
 
 class RequestInfoService(requestInfoEntry: RequestInfoEntry) {
-//  self: RedisDataSource with Utils =>
 
   def getRjectedNum: Option[String] = {
     requestInfoEntry.getRjectedNum

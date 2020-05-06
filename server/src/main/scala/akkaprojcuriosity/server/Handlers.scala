@@ -1,10 +1,9 @@
 package akkaprojcuriosity.server
 
-import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives.complete
 import akka.http.scaladsl.server._
-import akkaprojcuriosity.datasource.{RedisDataSource, RequestInfoEntry, Utils}
+import akkaprojcuriosity.datasource.{ RequestInfoEntry }
 
 class Handlers(requestInfoEntry: RequestInfoEntry) {
 

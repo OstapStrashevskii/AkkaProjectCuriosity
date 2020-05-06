@@ -22,40 +22,16 @@ lazy val akkaDependencies = Seq(
   akkaStream
 )
 
-//libraryDependencies ++= akkaDependencies
-
-//lazy val root = (project in file("."))
-//  .settings(
-//    name := "AkkaCuriosity",
-//  )
-
 lazy val datasource =
   (project in file("datasource")).settings(libraryDependencies ++= redisDependencies)
 
 lazy val services =
-  (project in file("services")).dependsOn(datasource)
+  (project in file("services")).dependsOn(datasource, apiClient)
 
 lazy val controllers = (project in file("controllers")).settings(name := "controllers", libraryDependencies ++= akkaDependencies).dependsOn(services)
 
-lazy val server = (project in file("server")).settings(name := "server", libraryDependencies ++= akkaDependencies ).dependsOn(controllers, services, datasource)
+lazy val server = (project in file("server")).settings(name := "server", libraryDependencies ++= akkaDependencies ).dependsOn(controllers, services, datasource, apiClient)
 
 lazy val apiClient = (project in file("client")).settings(name := "client", libraryDependencies ++= akkaDependencies :+ playJson :+ akkaHttpJson).dependsOn(dto)
 
 lazy val dto = (project in file("dto")).settings(name := "dto", libraryDependencies ++= akkaDependencies :+ playJson)
-
-//"com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
-//"ch.qos.logback" % "logback-classic" % "1.2.3",
-//
-//"com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
-//"com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
-//"com.typesafe.akka" %% "akka-stream" % akkaVersion,
-//
-//"com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
-//"com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
-//"com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-//"com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
-//"org.scalatest" %% "scalatest" % "3.1.0" % Test,
-
-
-
-
