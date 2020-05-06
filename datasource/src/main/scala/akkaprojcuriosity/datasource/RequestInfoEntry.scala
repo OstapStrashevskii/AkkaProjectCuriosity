@@ -3,7 +3,7 @@ package akkaprojcuriosity.datasource
 import scala.concurrent.Future
 
 class RequestInfoEntry(redisDataSource: RedisDataSource) {
-  self: Utils =>
+  self: Utils => //todo do not use cake pattern with over types of injections
 
   def setRejectedNum(num: Int): Boolean = {
     redisDataSource.redisClient.set(RejectedRequestNum, num)
