@@ -2,12 +2,10 @@ package akkaprojcuriosity.services
 
 import akkaprojcuriosity.client.Client
 
-import scala.concurrent.Future
-//import scala.concurrent.{ ExecutionContext, Future }
-import scala.concurrent.ExecutionContext.Implicits.global //todo via class or method
-import akkaprojcuriosity.dto.{Photo}
+import scala.concurrent.{ExecutionContext, Future}
+import akkaprojcuriosity.dto.Photo
 
-class ImageService(apiClient: Client) {
+class ImageService(apiClient: Client)(implicit executionContext: ExecutionContext) {
 
   def getRandomPhoto: Future[Photo] = {
     apiClient.futurePhotos.map {

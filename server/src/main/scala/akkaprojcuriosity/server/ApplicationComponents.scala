@@ -8,10 +8,13 @@ import akkaprojcuriosity.datasource.{RedisDataSource, RequestInfoEntry, Utils}
 import akkaprojcuriosity.services.{ImageService, RequestInfoService}
 import akkaprojcuriosity.client.Client
 
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
+
 object ApplicationComponents {
 
   implicit val system = ActorSystem("actorSystem")
   implicit val materializer: Materializer = Materializer(system)
+  implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
   val logger = Logger("logger")//todo - how to use/inject?
 

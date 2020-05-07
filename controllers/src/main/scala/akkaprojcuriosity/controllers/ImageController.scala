@@ -3,6 +3,7 @@ package akkaprojcuriosity.controllers
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives.{complete, get, path, _}
 import akkaprojcuriosity.services.ImageService
+import scala.concurrent.{ExecutionContext, Future}
 
 import scala.util.{Failure, Success}
 

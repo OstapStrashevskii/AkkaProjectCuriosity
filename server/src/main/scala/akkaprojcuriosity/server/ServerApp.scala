@@ -10,6 +10,15 @@ import akkaprojcuriosity.server.ApplicationComponents._
 
 object ServerApp extends App {
 
+//  (
+//  implicit val config: Config = ConfigFactory.load(),
+//  val executionContext: ExecutionContext,
+//  val actorSystem: ActorSystem,
+//  val materializer: ActorMaterializer
+//  )
+
+
+
   initDB(redisDataSource)
 
   val bindingFuture: Future[Http.ServerBinding] = ApplicationComponents.http.bindAndHandle(getRoute, "localhost", 8080)
